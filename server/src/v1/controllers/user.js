@@ -28,7 +28,7 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   const { username, password } = req.body;
   try {
-    const user = await User.findById({ username }).select("password username");
+    const user = await User.findOne({ username }).select("password username");
 
     if (!user) {
       return res.status(401).json({
