@@ -1,7 +1,10 @@
+import darkLogo from "./images/logo-dark.png";
+import appIcon from "./images/favicon.png";
+
 const assets = {
   images: {
-    logoDark: require("./images/logo-dark.png"),
-    appIcon: require("./images/favicon.png"),
+    logoDark: darkLogo,
+    appIcon: appIcon,
   },
   colors: {
     secondary: "#292929",
