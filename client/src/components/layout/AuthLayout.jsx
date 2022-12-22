@@ -1,11 +1,9 @@
 import { Box, Container } from "@mui/material";
-import { useEffect } from "react";
-import { useState } from "react";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
+import assets from "../../assets";
 import authUtils from "../../utils/authUtils";
 import Loader from "../common/Loader";
-import assets from "../../assets";
-import Sidebar from "../common/Sidebar";
 
 const AuthLayout = () => {
   const navigate = useNavigate();
