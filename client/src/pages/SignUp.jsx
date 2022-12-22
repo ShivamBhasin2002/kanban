@@ -74,11 +74,6 @@ const SignUp = () => {
     }
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault()
-  //    const response = axios.get('http://127.0.0.1:5000/api/v1/')
-  // }
-
   return (
     <>
       <Box component="form" sx={{ mt: 1 }} onSubmit={handleSubmit} noValidate>
