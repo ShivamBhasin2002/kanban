@@ -33,6 +33,7 @@ const Login = () => {
           margin="normal"
           required
           fullWidth
+          autoComplete="true"
           id="password"
           type="password"
           label="Password"
