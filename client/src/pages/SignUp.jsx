@@ -16,66 +16,62 @@ const SignUp = () => {
   const [confirmPasswordErrText, setConfirmPasswordErrText] = useState("");
 
   // const handleSubmit = async (e) => {
-  //   e.preventDefault();
+  //   e.preventDefault()
+  //   setUsernameErrText('')
+  //   setPasswordErrText('')
+  //   setConfirmPasswordErrText('')
 
-  //   setPasswordErrText("");
-  //   setConfirmPasswordErrText("");
+  //   const data = new FormData(e.target)
+  //   const username = data.get('username').trim()
+  //   const password = data.get('password').trim()
+  //   const confirmPassword = data.get('confirmPassword').trim()
 
-  //   const data = new FormData(e.target);
-  //   const username = data.get("username").trim();
-  //   const password = data.get("password").trim();
-  //   const confirmPassword = data.get("confirmPassword").trim();
+  //   let err = false
 
-  //   let err = false;
-
-  //   if (username === "") {
-  //     err = true;
-  //     setUsernameErrText("Please fill this field");
+  //   if (username === '') {
+  //     err = true
+  //     setUsernameErrText('Please fill this field')
   //   }
-  //   if (password === "") {
-  //     err = true;
-  //     setPasswordErrText("Please fill this field");
+  //   if (password === '') {
+  //     err = true
+  //     setPasswordErrText('Please fill this field')
   //   }
-  //   if (confirmPassword === "") {
-  //     err = true;
-  //     setConfirmPasswordErrText("Please fill this field");
+  //   if (confirmPassword === '') {
+  //     err = true
+  //     setConfirmPasswordErrText('Please fill this field')
   //   }
   //   if (password !== confirmPassword) {
-  //     err = true;
-  //     setConfirmPasswordErrText("Confirm password not match");
+  //     err = true
+  //     setConfirmPasswordErrText('Confirm password not match')
   //   }
 
-  //   if (err) return;
+  //   if (err) return
 
-  //   setLoading(true);
+  //   setLoading(true)
 
   //   try {
   //     const res = await authApi.signup({
-  //       username,
-  //       password,
-  //       confirmPassword,
-  //     });
-  //     setLoading(false);
-  //     localStorage.setItem("token", res.token);
-
-  //     navigate("/");
+  //       username, password, confirmPassword
+  //     })
+  //     setLoading(false)
+  //     localStorage.setItem('token', res.token)
+  //     navigate('/')
   //   } catch (err) {
-  //     console.log(err.message);
-  //     // const errors = err.data?.errors;
-  //     // errors.forEach((e) => {
-  //     //   if (e.param === "username") {
-  //     //     setUsernameErrText(e.msg);
+  //     // const errors = err?.data?.errors
+  //     // errors?.forEach(e => {
+  //     //   if (e.param === 'username') {
+  //     //     setUsernameErrText(e.msg)
   //     //   }
-  //     //   if (e.param === "password") {
-  //     //     setPasswordErrText(e.msg);
+  //     //   if (e.param === 'password') {
+  //     //     setPasswordErrText(e.msg)
   //     //   }
-  //     //   if (e.param === "confirmPassword") {
-  //     //     setConfirmPasswordErrText(e.msg);
+  //     //   if (e.param === 'confirmPassword') {
+  //     //     setConfirmPasswordErrText(e.msg)
   //     //   }
-  //     // });
-  //     setLoading(false);
+  //     // })
   //   }
-  // };
+  //   setLoading(false)
+  // }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -115,15 +111,18 @@ const SignUp = () => {
       const result = await axios
         .post(`${baseURL}/auth/signup`, { username, password, confirmPassword })
         .then((res) => {
-          console.log(res.data);
           localStorage.setItem("token", res.data?.token);
           setLoading(false);
           navigate("/");
         })
         .catch((error) => console.error(error.message));
-    } catch (error) {
-      console.log(error.message);
+      return result;
+    } catch (err) {
+      console.log(err.message);
+      setLoading(false);
     }
+
+    setLoading(false);
   };
 
   return (
