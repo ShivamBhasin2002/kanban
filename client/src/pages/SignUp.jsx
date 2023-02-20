@@ -72,58 +72,6 @@ const SignUp = () => {
     setLoading(false);
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   setPasswordErrText("");
-  //   setConfirmPasswordErrText("");
-
-  //   const data = new FormData(e.target);
-  //   const username = data.get("username").trim();
-  //   const password = data.get("password").trim();
-  //   const confirmPassword = data.get("confirmPassword").trim();
-
-  //   let err = false;
-
-  //   if (username === "") {
-  //     err = true;
-  //     setUsernameErrText("Please fill this field");
-  //   }
-  //   if (password === "") {
-  //     err = true;
-  //     setPasswordErrText("Please fill this field");
-  //   }
-  //   if (confirmPassword === "") {
-  //     err = true;
-  //     setConfirmPasswordErrText("Please fill this field");
-  //   }
-  //   if (password !== confirmPassword) {
-  //     err = true;
-  //     setConfirmPasswordErrText("Confirm password not match");
-  //   }
-
-  //   if (err) return;
-
-  //   setLoading(true);
-
-  //   try {
-  //     const result = await axios
-  //       .post(`${baseURL}/auth/signup`, { username, password, confirmPassword })
-  //       .then((res) => {
-  //         localStorage.setItem("token", res?.token);
-  //         setLoading(false);
-  //         navigate("/");
-  //       })
-  //       .catch((error) => console.error(error.message));
-  //     return result;
-  //   } catch (err) {
-  //     console.log(err.message);
-  //     setLoading(false);
-  //   }
-
-  //   setLoading(false);
-  // };
-
   return (
     <>
       <Box component="form" sx={{ mt: 1 }} onSubmit={handleSubmit} noValidate>
