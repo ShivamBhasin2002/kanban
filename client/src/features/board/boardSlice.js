@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { value: {} };
+const initialState = { value: [] };
 
 export const boardSlice = createSlice({
-  name: "board",
+  name: "user",
   initialState,
   reducers: {
     setBoard: (state, action) => {
