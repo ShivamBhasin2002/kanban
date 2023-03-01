@@ -4,7 +4,7 @@ import { Drawer, IconButton, List, ListItem, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import boardApi from "../../api/boardApi";
 import assests from "../../assets/index";
@@ -16,11 +16,15 @@ const Sidebar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const sidebarWidth = 250;
+  const { boardId } = useParams();
 
   const getAllBoards = async () => {
     try {
       const res = await boardApi.getAllBoards();
       dispatch(setBoard(res));
+      if (res.length > 0 && boardId === null) {
+        navigate(`/boards/${res[0].id}`);
+      }
     } catch (err) {
       toast.error(err.message);
     }
