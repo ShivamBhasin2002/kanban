@@ -11,29 +11,24 @@ import assests from "../../assets/index";
 import { setBoard } from "../../features/board/boardSlice";
 
 const Sidebar = () => {
-  const dispatch = useDispatch();
-  const boards = useSelector((state) => state.board.value);
-  const navigate = useNavigate();
   const user = useSelector((state) => state.user.value);
+  const boards = useSelector((state) => state.board.value);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const sidebarWidth = 250;
 
   const getAllBoards = async () => {
     try {
       const res = await boardApi.getAllBoards();
-      dispatch(setBoard([res]));
+      dispatch(setBoard(res));
     } catch (err) {
       toast.error(err.message);
-      console.log(err.message);
     }
   };
 
   useEffect(() => {
     getAllBoards();
   }, []);
-
-  useEffect(() => {
-    console.log("userEffectBoard" + boards);
-  }, [boards]);
 
   const logout = () => {
     localStorage.removeItem("token");
