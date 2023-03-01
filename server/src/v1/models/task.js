@@ -18,7 +18,7 @@ const taskSchema = new Schema(
       default: "",
     },
     position: {
-      type: number,
+      type: Number,
     },
   },
   schemaOptions
