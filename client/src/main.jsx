@@ -6,7 +6,8 @@ import App from "./App";
 import { store } from "./features/store";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+  // <React.StrictMode>
+  <>
     <Provider store={store}>
       <App />
     </Provider>
@@ -16,5 +17,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       newestOnTop={false}
       closeOnClick
     />
-  </React.StrictMode>
+  </>
+  // </React.StrictMode>
 );
