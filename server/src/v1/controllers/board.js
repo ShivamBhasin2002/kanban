@@ -17,7 +17,7 @@ exports.createBoard = async (req, res) => {
 
 exports.getAllBoards = async (req, res) => {
   try {
-    const boards = Board.find({ user: req.user._id }).sort("-position");
+    const boards = await Board.find({ user: req.user._id }).sort("-position");
     res.status(200).json(boards);
   } catch (err) {
     res.status(500).json(err.message);
