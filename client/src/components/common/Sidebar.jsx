@@ -1,16 +1,25 @@
 import AddBoxOutlined from "@mui/icons-material/AddBoxOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import { Drawer, IconButton, List, ListItem, Typography } from "@mui/material";
+import {
+  Drawer,
+  IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  Typography,
+} from "@mui/material";
 import { Box } from "@mui/system";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import boardApi from "../../api/boardApi";
 import assests from "../../assets/index";
-import { setBoard } from "../../features/board/boardSlice";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { setBoards } from "../../features/board/boardSlice";
 
 const Sidebar = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
   const user = useSelector((state) => state.user.value);
   const boards = useSelector((state) => state.board.value);
   const dispatch = useDispatch();
@@ -21,10 +30,7 @@ const Sidebar = () => {
   const getAllBoards = async () => {
     try {
       const res = await boardApi.getAllBoards();
-      dispatch(setBoard(res));
-      if (res.length > 0 && boardId === null) {
-        navigate(`/boards/${res[0].id}`);
-      }
+      dispatch(setBoards(res));
     } catch (err) {
       toast.error(err.message);
     }
@@ -32,12 +38,48 @@ const Sidebar = () => {
 
   useEffect(() => {
     getAllBoards();
-  }, []);
+  }, [dispatch]);
+
+  useEffect(() => {
+    const activeItem = boards.findIndex((e) => e.id === boardId);
+    if (boards.length > 0 && boardId === null) {
+      navigate(`/boards/${boards[0].id}`);
+    }
+    setActiveIndex(activeItem);
+  }, [boards, boardId, navigate]);
 
   const logout = () => {
     localStorage.removeItem("token");
     navigate("/login");
     toast.success("Logged Out 👍🏻");
+  };
+
+  const onDragEnd = async ({ source, destination }) => {
+    const newList = [...boards];
+    const [removed] = newList.splice(source.index, 1);
+    newList.splice(destination.index, 0, removed);
+
+    const activeItem = newList.findIndex((e) => e.id === boardId);
+    setActiveIndex(activeItem);
+    dispatch(setBoards(newList));
+
+    try {
+      await boardApi.updateBoardPosition({ boards: newList });
+    } catch (err) {
+      toast.error(err.message);
+      console.log(err.message);
+    }
+  };
+
+  const createNewBoard = async () => {
+    try {
+      const res = await boardApi.createBoard();
+      const newList = [res, ...boards];
+      dispatch(setBoards(newList));
+      navigate(`/boards/${res?.id}`);
+    } catch (err) {
+      toast.error(err.message);
+    }
   };
 
   return (
@@ -103,11 +145,56 @@ const Sidebar = () => {
             <Typography variant="body" fontWeight="700">
               Private
             </Typography>
-            <IconButton>
+            <IconButton onClick={createNewBoard}>
               <AddBoxOutlined fontSize="small" />
             </IconButton>
           </Box>
         </ListItem>
+
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable
+            key={"list-board-droppable"}
+            droppableId={"list-board-droppable"}
+          >
+            {(provided) => (
+              <div ref={provided.innerRef} {...provided.droppableProps}>
+                {boards.map((item, index) => (
+                  <Draggable key={item.id} draggableId={item.id} index={index}>
+                    {(provided, snapshot) => (
+                      <ListItemButton
+                        ref={provided.innerRef}
+                        {...provided.dragHandleProps}
+                        {...provided.draggableProps}
+                        selected={index === activeIndex}
+                        component={Link}
+                        to={`/boards/${item.id}`}
+                        sx={{
+                          pl: "20px",
+                          cursor: snapshot.isDragging
+                            ? "grab"
+                            : "pointer!important",
+                        }}
+                      >
+                        <Typography
+                          fontWeight="700"
+                          sx={{
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                          }}
+                          variant="body2"
+                        >
+                          {item?.icon} {item?.title}
+                        </Typography>
+                      </ListItemButton>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
       </List>
     </Drawer>
   );
