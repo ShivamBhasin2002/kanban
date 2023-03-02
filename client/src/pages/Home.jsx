@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import boardApi from "../api/boardApi";
-import { setBoard } from "../features/board/boardSlice";
+import { setBoards } from "../features/board/boardSlice";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ const Home = () => {
     setLoading(true);
     try {
       const res = await boardApi.createBoard();
-      dispatch(setBoard([res]));
+      dispatch(setBoards([res]));
       navigate(`/boards/${res.id}`);
     } catch (err) {
       toast.error(err.message);
