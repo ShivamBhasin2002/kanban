@@ -6,12 +6,12 @@ export const boardSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setBoard: (state, action) => {
+    setBoards: (state, action) => {
       state.value = action.payload;
     },
   },
 });
 
-export const { setBoard } = boardSlice.actions;
+export const { setBoards } = boardSlice.actions;
 
 export default boardSlice.reducer;
