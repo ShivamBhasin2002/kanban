@@ -10,12 +10,12 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import boardApi from "../../api/boardApi";
 import assests from "../../assets/index";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { setBoards } from "../../features/board/boardSlice";
 
 const Sidebar = () => {
