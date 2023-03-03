@@ -1,7 +1,14 @@
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 import StarOutlinedIcon from "@mui/icons-material/StarOutline";
-import { Box, Button, IconButton, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Divider,
+  IconButton,
+  TextField,
+  Typography,
+} from "@mui/material";
 import {} from "emoji-mart";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -55,31 +62,33 @@ const Board = () => {
       </Box>
       <Box sx={{ padding: "10px 50px" }}>
         <Box sx={{}}>
-          {/* emoji picker */}{" "}
           <TextField
-            value={description}
-            // onChange={updateDescription}
-            placeholder="Add a description"
+            value={title}
+            // onChange={updateTitle}
+            placeholder="Untitled"
             variant="outlined"
-            multiline
             fullWidth
             sx={{
               "& .MuiOutlinedInput-input": { padding: 0 },
               "& .MuiOutlinedInput-notchedOutline": { border: "unset " },
-              "& .MuiOutlinedInput-root": { fontSize: "0.8rem" },
+              "& .MuiOutlinedInput-root": {
+                fontSize: "2rem",
+                fontWeight: "700",
+              },
             }}
           />
         </Box>
         <TextField
-          value={title}
-          // onChange={updateTitle}
-          placeholder="Untitled"
+          value={description}
+          // onChange={updateDescription}
+          placeholder="Add a description"
           variant="outlined"
+          multiline
           fullWidth
           sx={{
             "& .MuiOutlinedInput-input": { padding: 0 },
             "& .MuiOutlinedInput-notchedOutline": { border: "unset " },
-            "& .MuiOutlinedInput-root": { fontSize: "2rem", fontWeight: "700" },
+            "& .MuiOutlinedInput-root": { fontSize: "0.8rem" },
           }}
         />
 
@@ -88,7 +97,7 @@ const Board = () => {
             sx={{
               display: "flex",
               alignItems: "center",
-              justifyContent: "center",
+              justifyContent: "space-between",
             }}
           >
             <Button>Add Section</Button>
@@ -96,6 +105,7 @@ const Board = () => {
               {section?.length} Sections
             </Typography>
           </Box>
+          <Divider sx={{ margin: "10px 0px" }} />
         </Box>
       </Box>
     </>
