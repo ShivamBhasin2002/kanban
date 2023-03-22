@@ -1,6 +1,6 @@
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
-import StarOutlinedIcon from "@mui/icons-material/StarOutline";
+import StarOutlinedIcon from "@mui/icons-material/StarOutlined";
 import {
   Box,
   Button,
@@ -89,6 +89,15 @@ const Board = () => {
     });
   };
 
+  const addToFavourites = async () => {
+    try {
+      await boardApi.updateBoard(boardId, { favourite: !isFavourite });
+      setIsFavourite(!isFavourite);
+    } catch (err) {
+      toast.error(err.message);
+    }
+  };
+
   useEffect(() => {
     getBoard();
   }, [boardId]);
@@ -101,7 +110,7 @@ const Board = () => {
         justifyContent="space-between"
         width="100%"
       >
-        <IconButton>
+        <IconButton onClick={addToFavourites}>
           {isFavourite ? (
             <StarOutlinedIcon color="warning" />
           ) : (
