@@ -9,9 +9,8 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import {} from "emoji-mart";
-import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import boardApi from "../api/boardApi";
