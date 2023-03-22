@@ -11,6 +11,15 @@ const EmojiPicker = (props) => {
     setSelectedEmoji(props.icon);
   }, [props.icon]);
 
+  const selectEmoji = (e) => {
+    const sym = e.unified.split("-");
+    const codesArray = [];
+    sym.forEach((el) => codesArray.push("0x" + el));
+    const emoji = String.fromCodePoint(...codesArray);
+    setIsShowPicker(false);
+    props.onChange(emoji);
+  };
+
   const showPicker = () => setIsShowPicker(!isShowPicker);
 
   return (
@@ -31,7 +40,7 @@ const EmojiPicker = (props) => {
           zIndex: "999",
         }}
       >
-        <Picker theme="dark" onSelect={selectedEmoji} showPreview={false} />
+        <Picker theme="dark" onSelect={selectEmoji} showPreview={false} />
       </Box>
     </Box>
   );
