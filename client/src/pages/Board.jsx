@@ -10,19 +10,24 @@ import {
   Typography,
 } from "@mui/material";
 import {} from "emoji-mart";
+import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import boardApi from "../api/boardApi";
 import EmojiPicker from "../components/common/EmojiPicker";
+import { setBoards } from "../features/board/boardSlice";
 
 const Board = () => {
+  const dispatch = useDispatch();
   const { boardId } = useParams();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState([]);
   const [section, setSection] = useState("");
   const [isFavourite, setIsFavourite] = useState(false);
   const [icon, setIcon] = useState("");
+
+  const boards = useSelector((state) => state.board.value);
 
   const getBoard = async () => {
     try {
@@ -40,6 +45,21 @@ const Board = () => {
   useEffect(() => {
     getBoard();
   }, [boardId]);
+
+  const onIconChange = async (newIcon) => {
+    let temp = [...boards];
+    const index = temp.find((e) => e.id === boardId);
+    temp[index] = { ...temp[index], icon: newIcon };
+    setIcon(newIcon);
+    dispatch(setBoards(temp));
+    try {
+      await boardApi.updateBoard(boardId, { icon: newIcon });
+    } catch (err) {
+      toast.error(err.message);
+    }
+  };
+
+  const updateTitle = async () => {};
 
   return (
     <>
@@ -63,7 +83,7 @@ const Board = () => {
       </Box>
       <Box sx={{ padding: "10px 50px" }}>
         <Box sx={{}}>
-          <EmojiPicker icon={icon} />
+          <EmojiPicker icon={icon} onChange={onIconChange} />
           <TextField
             value={title}
             // onChange={updateTitle}
