@@ -18,6 +18,13 @@ router.get(
   tokenHandler.verifyToken,
   boardController.getSingleBoard
 );
+
+router.get(
+  "/favouriteBoards",
+  tokenHandler.verifyToken,
+  boardController.getFavouriteBoards
+);
+
 router.put(
   "/:boardId",
   param("boardId").custom((value) => {
