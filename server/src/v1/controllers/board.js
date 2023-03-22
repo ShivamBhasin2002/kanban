@@ -97,3 +97,16 @@ exports.updateBoard = async (req, res) => {
     res.status(500).json(err.message);
   }
 };
+
+exports.getFavouriteBoards = async (req, res) => {
+  try {
+    const favourites = await Board.find({
+      user: req.user._id,
+      favourite: true,
+    }).sort("-favouritePosition");
+
+    res.status(200).json(favourites);
+  } catch (error) {
+    res.status(500).json(err.message);
+  }
+};
