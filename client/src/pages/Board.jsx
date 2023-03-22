@@ -18,6 +18,9 @@ import boardApi from "../api/boardApi";
 import EmojiPicker from "../components/common/EmojiPicker";
 import { setBoards } from "../features/board/boardSlice";
 
+let timer;
+const timeout = 500;
+
 const Board = () => {
   const dispatch = useDispatch();
   const { boardId } = useParams();
@@ -42,10 +45,6 @@ const Board = () => {
     }
   };
 
-  useEffect(() => {
-    getBoard();
-  }, [boardId]);
-
   const onIconChange = async (newIcon) => {
     let temp = [...boards];
     const index = temp.find((e) => e.id === boardId);
@@ -59,7 +58,27 @@ const Board = () => {
     }
   };
 
-  const updateTitle = async () => {};
+  const updateTitle = async (e) => {
+    clearTimeout(timer);
+    const newTitle = e.target.value;
+    setTitle(newTitle);
+
+    let temp = [...boards];
+    const index = temp.find((e) => e.id === boardId);
+    temp[index] = { ...temp[index], title: newTitle };
+    dispatch(setBoards(temp));
+    timer = setTimeout(async () => {
+      try {
+        await boardApi.updateBoard(boardId, { title: newTitle });
+      } catch (err) {
+        toast.error(err.message);
+      }
+    });
+  };
+
+  useEffect(() => {
+    getBoard();
+  }, [boardId]);
 
   return (
     <>
@@ -86,7 +105,7 @@ const Board = () => {
           <EmojiPicker icon={icon} onChange={onIconChange} />
           <TextField
             value={title}
-            // onChange={updateTitle}
+            onChange={updateTitle}
             placeholder="Untitled"
             variant="outlined"
             fullWidth
