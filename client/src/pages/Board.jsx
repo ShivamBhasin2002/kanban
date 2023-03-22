@@ -76,6 +76,19 @@ const Board = () => {
     });
   };
 
+  const updateDescription = async (e) => {
+    clearTimeout(timer);
+    const newDescription = e.target.value;
+    setDescription(newDescription);
+    timer = setTimeout(async () => {
+      try {
+        await boardApi.updateBoard(boardId, { description: newDescription });
+      } catch (err) {
+        toast.error(err.message);
+      }
+    });
+  };
+
   useEffect(() => {
     getBoard();
   }, [boardId]);
@@ -121,7 +134,7 @@ const Board = () => {
         </Box>
         <TextField
           value={description}
-          // onChange={updateDescription}
+          onChange={updateDescription}
           placeholder="Add a description"
           variant="outlined"
           multiline
