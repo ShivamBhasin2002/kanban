@@ -18,7 +18,6 @@ import EmojiPicker from "../components/common/EmojiPicker";
 import { setBoards } from "../features/board/boardSlice";
 
 let timer;
-const timeout = 500;
 
 const Board = () => {
   const dispatch = useDispatch();
