@@ -17,6 +17,7 @@ import { toast } from "react-toastify";
 import boardApi from "../../api/boardApi";
 import assests from "../../assets/index";
 import { setBoards } from "../../features/board/boardSlice";
+import FavouriteBoardsList from "./FavouriteBoardsList";
 
 const Sidebar = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -119,20 +120,8 @@ const Sidebar = () => {
           </Box>
         </ListItem>
         <Box sx={{ paddingTop: "10px" }} />
-        <ListItem>
-          <Box
-            sx={{
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
-            <Typography variant="body" fontWeight="700">
-              Favourites
-            </Typography>
-          </Box>
-        </ListItem>
+        <FavouriteBoardsList />
+
         <ListItem>
           <Box
             sx={{
