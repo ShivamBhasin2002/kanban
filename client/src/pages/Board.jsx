@@ -48,7 +48,7 @@ const Board = () => {
     const index = temp.find((e) => e.id === boardId);
     temp[index] = { ...temp[index], icon: newIcon };
     setIcon(newIcon);
-    dispatch(setBoards(temp));
+    dispatch(x(temp));
     try {
       await boardApi.updateBoard(boardId, { icon: newIcon });
     } catch (err) {

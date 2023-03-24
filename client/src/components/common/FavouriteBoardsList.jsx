@@ -9,6 +9,7 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 const FavouriteBoardsList = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const onDragEnd = () => {};
 
   const dispatch = useDispatch();
   const list = useSelector((state) => state.favourites.value);

@@ -2,23 +2,27 @@ import { Box, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Picker } from "emoji-mart";
 import "emoji-mart/css/emoji-mart.css";
+import { useDispatch } from "react-redux";
+import { setIcon } from "../../features/board/boardSlice";
 
 const EmojiPicker = (props) => {
+  const dispatch = useDispatch();
   const [selectedEmoji, setSelectedEmoji] = useState();
   const [isShowPicker, setIsShowPicker] = useState(false);
 
-  useEffect(() => {
-    setSelectedEmoji(props.icon);
-  }, [props.icon]);
-
   const selectEmoji = (e) => {
-    const sym = e.unified.split("-");
+    const sym = e?.unified?.split("-");
     const codesArray = [];
-    sym.forEach((el) => codesArray.push("0x" + el));
+    sym?.forEach((el) => codesArray.push("0x" + el));
     const emoji = String.fromCodePoint(...codesArray);
     setIsShowPicker(false);
-    props.onChange(emoji);
+    dispatch(setIcon({ oldIcon: selectedEmoji, newIcon: emoji }));
+    setSelectedEmoji(emoji);
   };
+
+  useEffect(() => {
+    if (props.icon) setSelectedEmoji(props.icon);
+  }, [props.icon]);
 
   const showPicker = () => setIsShowPicker(!isShowPicker);
 
